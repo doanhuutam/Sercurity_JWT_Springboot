@@ -26,9 +26,9 @@ import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
-@CrossOrigin("*")
 @RequestMapping("/api/auth")
 @RestController
+@CrossOrigin("*")
 public class AuthController {
     @Autowired
     UserServiceImpl userService;
@@ -84,6 +84,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+//        dữ liệu trả về .lấy thêm thì thêm vào
         return ResponseEntity.ok(new JwtResponse(token,userPrinciple.getName(), userPrinciple.getAuthorities()));
 
     }

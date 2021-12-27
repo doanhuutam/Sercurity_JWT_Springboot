@@ -17,11 +17,6 @@ public class JwtProvider {
     public static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
     private String jwtSecretKey = "doantam";
     private int jwtExpiration = 86400;
-
-
-
-
-
     public String createToken(Authentication authentication) {
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         return Jwts.builder()

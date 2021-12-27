@@ -1,5 +1,7 @@
 package com.example.be.config;
 
+import com.example.be.model.Role;
+import com.example.be.model.RoleName;
 import com.example.be.security.jwt.JwtEntryPoint;
 import com.example.be.security.jwt.JwtProvider;
 import com.example.be.security.jwt.JwtTokenFilter;
@@ -7,6 +9,7 @@ import com.example.be.security.userprincal.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -50,15 +53,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-//                .authorizeRequests().antMatchers("/gkz-stomp-endpoint").hasRole("ADMIN")
-//                .and()
-                .exceptionHandling()
+                .and().exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
